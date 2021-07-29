@@ -5,6 +5,11 @@ public class Queue {
 	boolean valueSet = false;
 	
 	public synchronized void put(int n) {
+		/* there is a possibility that in very rare cases the waiting thread could be 
+		 * awakened due to a spurious wakeup because of this 
+		 * remote possibility, the Java API documentation recommends that calls to wait( )
+		 * should take place within a loop that checks the condition on which the thread is waiting 
+		 */
 		while(valueSet) {
 			try {
 				wait();
@@ -19,6 +24,11 @@ public class Queue {
 	}
 	
 	public synchronized void get() {
+		/* there is a possibility that in very rare cases the waiting thread could be 
+		 * awakened due to a spurious wakeup because of this 
+		 * remote possibility, the Java API documentation recommends that calls to wait( )
+		 * should take place within a loop that checks the condition on which the thread is waiting 
+		 */
 		while(!valueSet) {
 			try {
 				wait();
